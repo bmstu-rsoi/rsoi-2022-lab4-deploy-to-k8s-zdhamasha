@@ -3,50 +3,48 @@ on:
   push:
     branches:
       - deployment
+
+env:
+  PSCI_REGISTRY_PASSWORD: ${{secrets.PSCI_REGISTRY_PASSWORD}}
+  PSCI_REGISTRY_USERNAME: ${{secrets.PSCI_REGISTRY_USERNAME}}
+
 jobs:
   build:
     name: Autograding
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+
+      - name: Setup Maven
+        uses: stCarolas/setup-maven@v4.4
+        with:
+          maven-version: 3.6.3
+
+      - name: gateway build
+        run: mvn -f gateway/pom.xml --batch-mode --update-snapshots clean package -DskipTests 
+      - name: flight build
+        run: mvn -f flight/pom.xml --batch-mode --update-snapshots clean package -DskipTests 
+      - name: ticket build
+        run: mvn -f ticket/pom.xml --batch-mode --update-snapshots clean package -DskipTests 
+      - name: bonus build
+        run: mvn -f bonus/pom.xml --batch-mode --update-snapshots clean package -DskipTests 
+        
       - uses: docker/setup-buildx-action@v2
-
-      - name: Login to Docker Hub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1
-        with:
-          username: ${{secrets.PSCI_REGISTRY_USERNAME}}
-          password: ${{secrets.PSCI_REGISTRY_PASSWORD}}
-
-      - name: Docker meta
-        id: system
-        uses: docker/metadata-action@v3
-        with:
-          images: |
-            zdhamasha/gateway
-            zdhamasha/flight
-            zdhamasha/bonus
-            zdhamasha/ticket
-          tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
-
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: cicd/docker
-          platforms: linux/amd64,linux/arm/v7
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.system.outputs.tags }}
-          labels: ${{ steps.system.outputs.labels }}
+      - name: Build images
+        run: docker-compose build
+        
+      - name: Push images
+        run: |
+          docker login -u $PSCI_REGISTRY_USERNAME -p $PSCI_REGISTRY_PASSWORD 
+          docker-compose push
 
       # - name: Run API Tests
       #   uses: matt-ball/newman-action@master

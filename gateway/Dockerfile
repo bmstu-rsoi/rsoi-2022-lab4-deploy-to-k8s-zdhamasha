@@ -4,7 +4,7 @@ LABEL image.author="zaid.hamasha@gmail.com"
 
 WORKDIR /opt
 
-COPY --chown=nobody:nobody   ../../gateway/target/gateway*.jar   /opt/gateway-service.jar
+COPY --chown=nobody:nobody   ./target/gateway*.jar   /opt/gateway-service.jar
 
 EXPOSE 8080
 

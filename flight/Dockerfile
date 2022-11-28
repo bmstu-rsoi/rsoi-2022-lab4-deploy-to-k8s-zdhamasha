@@ -4,7 +4,7 @@ LABEL image.author="zaid.hamasha@gmail.com"
 
 WORKDIR /opt
 
-COPY --chown=nobody:nobody   ../../flight/target/flight*.jar   /opt/flight-service.jar
+COPY --chown=nobody:nobody   ./target/flight*.jar   /opt/flight-service.jar
 
 EXPOSE 8060
 

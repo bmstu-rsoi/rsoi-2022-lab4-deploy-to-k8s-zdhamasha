@@ -4,7 +4,7 @@ LABEL image.author="zaid.hamasha@gmail.com"
 
 WORKDIR /opt
 
-COPY --chown=nobody:nobody   ../../ticket/target/ticket*.jar   /opt/ticket-service.jar
+COPY --chown=nobody:nobody   ./target/ticket*.jar   /opt/ticket-service.jar
 
 EXPOSE 8070
 

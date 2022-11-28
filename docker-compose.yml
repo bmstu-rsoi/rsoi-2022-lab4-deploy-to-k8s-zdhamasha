@@ -1,0 +1,42 @@
+version: "3"
+services:
+  postgres:
+    image: library/postgres:13
+    container_name: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+
+  flight:
+    image: zdhamasha/flight:1.0
+    build: ./flight/
+    ports:
+      - "8060:8060"
+      
+  ticket:
+    image: zdhamasha/ticket:1.0
+    build: ./ticket/
+    ports:
+      - "8070:8070"
+      
+  bonus:
+    image: zdhamasha/bonus:1.0
+    build: ./bonus/
+    ports:
+      - "8050:8050"
+
+  gateway:
+    image: zdhamasha/gateway:1.0
+    build: ./gateway/
+    ports:
+      - "8080:8080"
+    
+volumes:
+  db-data:

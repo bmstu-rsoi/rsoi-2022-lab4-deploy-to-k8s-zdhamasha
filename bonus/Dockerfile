@@ -4,7 +4,7 @@ LABEL image.author="zaid.hamasha@gmail.com"
 
 WORKDIR /opt
 
-COPY --chown=nobody:nobody   ../../bonus/target/bonus*.jar   /opt/bonus-service.jar
+COPY --chown=nobody:nobody   ./target/bonus*.jar   /opt/bonus-service.jar
 
 EXPOSE 8050
 

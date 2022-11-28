@@ -1,9 +1,0 @@
-apiVersion: actions.summerwind.dev/v1alpha1
-kind: RunnerDeployment
-metadata:
-  name: github-runner
-spec:
-  replicas: 1
-  template:
-    spec:
-      repository: bmstu-rsoi/rsoi-2022-lab4-deploy-to-k8s-zdhamasha
