@@ -2,7 +2,7 @@ name: GitHub Classroom Workflow
 on:
   push:
     branches:
-      - branches
+      - deployment
 jobs:
   build:
     name: Autograding
