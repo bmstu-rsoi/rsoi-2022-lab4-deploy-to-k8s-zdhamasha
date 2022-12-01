@@ -5,9 +5,6 @@ image:
   pullPolicy: Always
   tag: ""
 
-imagePullSecrets:
-  - "zdhamasha-dockerhub"
-
 
 service:
   type: ClusterIP
@@ -29,8 +26,8 @@ ingress:
 
 resources: 
   limits:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 300m
+    memory: 300Mi
   requests:
     cpu: 100m
     memory: 128Mi
