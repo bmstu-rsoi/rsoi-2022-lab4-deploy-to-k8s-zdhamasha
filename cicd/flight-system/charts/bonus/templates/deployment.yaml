@@ -30,8 +30,7 @@ spec:
               containerPort: 8050
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
             initialDelaySeconds: 30
             periodSeconds: 10
@@ -39,7 +38,7 @@ spec:
             failureThreshold: 90
           readinessProbe:
             httpGet:
-              path: /
+              path: /manage/health
               port: http
             initialDelaySeconds: 30
             periodSeconds: 10
