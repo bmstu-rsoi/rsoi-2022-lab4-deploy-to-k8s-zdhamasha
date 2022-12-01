@@ -1,6 +1,5 @@
 
 global: 
-  IMAGE_PULL_SECRET: "zdhamasha-dockerhub"
   db_host:            "zdhamasha-postgresql.zdhamasha.svc.cluster.local"
   db_username:        "postgres"
   db_password:        "P@ssw0rd"
