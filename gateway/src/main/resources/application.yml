@@ -3,12 +3,6 @@ server.port: 8080
 server.address: 0.0.0.0
 spring.application.name: flight-system-gateway
 
-spring:
-  datasource:
-    url: jdbc:postgresql://postgres:5432/postgres
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
 services:
   urls:
     flight-service-url: http://flight:8060/api/v1/flights

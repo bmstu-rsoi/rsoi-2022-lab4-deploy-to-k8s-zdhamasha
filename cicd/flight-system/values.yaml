@@ -1,0 +1,49 @@
+
+global: 
+  IMAGE_PULL_SECRET: "zdhamasha-dockerhub"
+  DB_HOST:            "zdhamasha-postgresql.zdhamasha.svc.cluster.local"
+  DB_USERNAME:        "postgres"
+  DB_PASSWORD:        "postgres"
+
+
+gateway:
+  enabled: true
+  image: 
+    repository: zdhamasha/gateway
+    tag: "1.0"
+     
+  ingress: 
+    devopsDomain: ${PSCI_INGRESS_DEVOPS_DOMAIN}
+    tls: 
+      secretName: ""
+
+flight:
+  enabled: false
+  image: 
+    repository: zdhamasha/flight
+    tag: "1.0"
+  ingress: 
+    devopsDomain: ${PSCI_INGRESS_DEVOPS_DOMAIN}
+    tls: 
+      secretName: ""
+
+ticket:
+  enabled: false
+  image: 
+    repository: zdhamasha/ticket
+    tag: "1.0"
+  ingress: 
+    devopsDomain: ${PSCI_INGRESS_DEVOPS_DOMAIN}
+    tls: 
+      secretName: ""
+
+
+bonus:
+  enabled: false
+  image: 
+    repository: zdhamasha/bonus
+    tag: "1.0"
+  ingress: 
+    devopsDomain: ${PSCI_INGRESS_DEVOPS_DOMAIN}
+    tls: 
+      secretName: ""
