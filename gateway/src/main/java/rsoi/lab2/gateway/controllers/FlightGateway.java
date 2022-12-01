@@ -19,13 +19,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/api/v1")
 public class FlightGateway {
 
-    @Value("${services.urls.flight-service-url}")
+    @Value("${services.urls.FLIGHT_SERVICE_URL}")
     private String flightServiceUrl;
 
-    @Value("${services.urls.privilege-service-url}")
+    @Value("${services.urls.PRIVILEGE_SERVICE_URL}")
     private String privilegeServiceUrl;
 
-    @Value("${services.urls.tickets-service-url}")
+    @Value("${services.urls.TICKETS_SERVICE_URL}")
     private String ticketsServiceUrl;
 
     @GetMapping("/flights")

@@ -23,6 +23,13 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: "FLIGHT_SERVICE_URL"
+            value: "{{ .Release.Name }}-flight"
+          - name: "PRIVILEGE_SERVICE_URL"
+            value: "{{ .Release.Name }}-bonus"
+          - name: "TICKETS_SERVICE_URL"
+            value: "{{ .Release.Name }}-ticket"
           ports:
             - name: http
               containerPort: 8080
