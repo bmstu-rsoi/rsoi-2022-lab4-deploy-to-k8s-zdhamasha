@@ -1,0 +1,13 @@
+dependencies:
+  - name: bonus
+    version: 0.1.0
+    condition: bonus.enabled
+  - name: flight
+    version: 0.1.0
+    condition: flight.enabled
+  - name: gateway
+    version: 0.1.0
+    condition: gateway.enabled
+  - name: ticket
+    version: 0.1.0
+    condition: ticket.enabled

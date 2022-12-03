@@ -1,0 +1,10 @@
+server.port: 8080
+
+server.address: 0.0.0.0
+spring.application.name: flight-system-gateway
+
+services:
+  urls:
+    FLIGHT_SERVICE_URL: http://${FLIGHT_SERVICE_URL}/api/v1/flights
+    PRIVILEGE_SERVICE_URL: http://${PRIVILEGE_SERVICE_URL}/api/v1/privilege
+    TICKETS_SERVICE_URL: http://${TICKETS_SERVICE_URL}/api/v1/tickets

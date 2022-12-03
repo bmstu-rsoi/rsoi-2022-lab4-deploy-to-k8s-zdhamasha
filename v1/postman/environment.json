@@ -4,7 +4,7 @@
 	"values": [
 		{
 			"key": "baseUrl",
-			"value": "",
+			"value": "https://master-gateway.devops-dev-ing.progressoft.cloud",
 			"enabled": true
 		}
 	],

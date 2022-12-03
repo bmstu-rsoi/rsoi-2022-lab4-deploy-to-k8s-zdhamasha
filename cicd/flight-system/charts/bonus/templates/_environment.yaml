@@ -1,0 +1,16 @@
+{{- define "environment" }}
+{{- $db_Host  := .Values.global.db_host }}
+{{- $username := .Values.global.db_username }}
+{{- $password := .Values.global.db_password }}
+#-------------------------------------------------------------------------------
+# db Variables
+#-------------------------------------------------------------------------------
+- name: "DB_HOST"
+  value: "{{ $db_Host  }}"
+- name: "DB_PASSWORD"
+  value: "{{ $password }}"
+- name: "DB_USERNAME"
+  value: "{{ $username }}"
+#-------------------------------------------------------------------------------
+{{- end }}
+

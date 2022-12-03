@@ -1,0 +1,47 @@
+
+global: 
+  db_host:            "zdhamasha-postgresql.zdhamasha.svc.cluster.local"
+  db_username:        "postgres"
+  db_password:        "P@ssw0rd"
+
+
+gateway:
+  enabled: true
+  image: 
+    repository: zdhamasha/gateway
+    tag: "1.0"
+  ingress: 
+    devopsDomain: "devops-dev-ing.progressoft.cloud"
+    tls: 
+      secretName: ""
+
+flight:
+  enabled: true
+  image: 
+    repository: zdhamasha/flight
+    tag: "1.0"
+  ingress: 
+    devopsDomain: "devops-dev-ing.progressoft.cloud"
+    tls: 
+      secretName: ""
+
+ticket:
+  enabled: true
+  image: 
+    repository: zdhamasha/ticket
+    tag: "1.0"
+  ingress: 
+    devopsDomain: "devops-dev-ing.progressoft.cloud"
+    tls: 
+      secretName: ""
+
+
+bonus:
+  enabled: true
+  image: 
+    repository: zdhamasha/bonus
+    tag: "1.0"
+  ingress: 
+    devopsDomain: "devops-dev-ing.progressoft.cloud"
+    tls: 
+      secretName: ""

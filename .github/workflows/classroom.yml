@@ -3,24 +3,63 @@ on:
   push:
     branches:
       - master
+
+env:
+  PSCI_REGISTRY_PASSWORD: ${{secrets.PSCI_REGISTRY_PASSWORD}}
+  PSCI_REGISTRY_USERNAME: ${{secrets.PSCI_REGISTRY_USERNAME}}
+  KUBE_CONFIG: ${{secrets.PSCI_K8S_CONFIG}}
+  NAMESPACE: "zdhamasha"
+
 jobs:
   build:
     name: Autograding
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - uses: docker/setup-buildx-action@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'adopt'
 
-      # TODO build, publish to docker hub, deploy to k8s
+      - name: Setup Maven
+        uses: stCarolas/setup-maven@v4.4
+        with:
+          maven-version: 3.6.3
+
+      - name: gateway build
+        run: mvn -f gateway/pom.xml --batch-mode --update-snapshots clean package -DskipTests 
+      - name: flight build
+        run: mvn -f flight/pom.xml --batch-mode --update-snapshots clean package -DskipTests 
+      - name: ticket build
+        run: mvn -f ticket/pom.xml --batch-mode --update-snapshots clean package -DskipTests 
+      - name: bonus build
+        run: mvn -f bonus/pom.xml --batch-mode --update-snapshots clean package -DskipTests 
+        
+      - uses: docker/setup-buildx-action@v2
+      - name: Build images
+        run: docker-compose build
+        
+      - name: Push images
+        run: |
+          docker login -u $PSCI_REGISTRY_USERNAME -p $PSCI_REGISTRY_PASSWORD 
+          docker-compose push
+
+      - name: deploy
+        run: |
+          export kubeconfig=$KUBE_CONFIG
+          echo $kubeconfig | base64 -d > /tmp/k8s-config
+          helm upgrade --install ${GITHUB_REF##*/} --kubeconfig /tmp/k8s-config --namespace=$NAMESPACE ./cicd/flight-system
+          sleep 120
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
         with:
-          collection: <variant>/postman/collection.json
-          environment: <variant>/postman/environment.json
+          collection: v1/postman/collection.json
+          environment: v1/postman/environment.json
           delayRequest: 100
           reporters: '[ "cli" ]'
 
