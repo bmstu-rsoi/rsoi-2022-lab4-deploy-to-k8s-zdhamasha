@@ -7,6 +7,7 @@ on:
 env:
   PSCI_REGISTRY_PASSWORD: ${{secrets.PSCI_REGISTRY_PASSWORD}}
   PSCI_REGISTRY_USERNAME: ${{secrets.PSCI_REGISTRY_USERNAME}}
+  KUBE_CONFIG: ${{secrets.PSCI_K8S_CONFIG}}
 
 jobs:
   build:
@@ -46,6 +47,11 @@ jobs:
           docker login -u $PSCI_REGISTRY_USERNAME -p $PSCI_REGISTRY_PASSWORD 
           docker-compose push
 
+      - name: deploy
+        run: |
+          export kubeconfig=$KUBE_CONFIG
+          echo $kubeconfig | base64 -d > /tmp/k8s-config
+          kubectl --kubeconfig /tmp/k8s-config get namespaces 
       # - name: Run API Tests
       #   uses: matt-ball/newman-action@master
       #   with:
