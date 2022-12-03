@@ -8,6 +8,7 @@ env:
   PSCI_REGISTRY_PASSWORD: ${{secrets.PSCI_REGISTRY_PASSWORD}}
   PSCI_REGISTRY_USERNAME: ${{secrets.PSCI_REGISTRY_USERNAME}}
   KUBE_CONFIG: ${{secrets.PSCI_K8S_CONFIG}}
+  NAMESPACE: "zdhamasha"
 
 jobs:
   build:
@@ -51,7 +52,7 @@ jobs:
         run: |
           export kubeconfig=$KUBE_CONFIG
           echo $kubeconfig | base64 -d > /tmp/k8s-config
-          kubectl --kubeconfig /tmp/k8s-config get namespaces 
+          helm upgrade --install ${GITHUB_REF##*/} --kubeconfig /tmp/k8s-config --namespace=$NAMESPACE ./cicd/flight-system
       # - name: Run API Tests
       #   uses: matt-ball/newman-action@master
       #   with:
