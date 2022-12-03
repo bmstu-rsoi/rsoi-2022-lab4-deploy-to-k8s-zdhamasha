@@ -2,7 +2,7 @@ name: GitHub Classroom Workflow
 on:
   push:
     branches:
-      - deployment
+      - master
 
 env:
   PSCI_REGISTRY_PASSWORD: ${{secrets.PSCI_REGISTRY_PASSWORD}}
@@ -54,7 +54,7 @@ jobs:
           echo $kubeconfig | base64 -d > /tmp/k8s-config
           helm upgrade --install ${GITHUB_REF##*/} --kubeconfig /tmp/k8s-config --namespace=$NAMESPACE ./cicd/flight-system
           sleep 120
-          
+
       - name: Run API Tests
         uses: matt-ball/newman-action@master
         with:
