@@ -4,8 +4,11 @@ LABEL image.author="zaid.hamasha@gmail.com"
 
 WORKDIR /opt
 
+ARG java_opts="-Xmx512M -Xms512M"
+ENV JAVAOPS=$java_opts
+
 COPY --chown=nobody:nobody   ./target/bonus*.jar   /opt/bonus-service.jar
 
 EXPOSE 8050
 
-ENTRYPOINT ["java","-jar","/opt/bonus-service.jar"]
+CMD java $JAVAOPS -jar /opt/bonus-service.jar
