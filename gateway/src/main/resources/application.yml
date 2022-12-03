@@ -5,6 +5,6 @@ spring.application.name: flight-system-gateway
 
 services:
   urls:
-    FLIGHT_SERVICE_URL: http://flight:8060/api/v1/flights
-    PRIVILEGE_SERVICE_URL: http://bonus:8050/api/v1/privilege
-    TICKETS_SERVICE_URL: http://ticket:8070/api/v1/tickets
+    FLIGHT_SERVICE_URL: ${FLIGHT_SERVICE_URL}
+    PRIVILEGE_SERVICE_URL: ${PRIVILEGE_SERVICE_URL}
+    TICKETS_SERVICE_URL: ${TICKETS_SERVICE_URL}
