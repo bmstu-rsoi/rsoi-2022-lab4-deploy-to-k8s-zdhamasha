@@ -12,4 +12,4 @@ helm upgrade --install \
     --namespace=zdhamasha \
     zdhamasha-postgresql \
     bitnami/postgresql \
-    --version 10.14.3
+    --version 11.6.2
