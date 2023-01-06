@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - deployment
 
 env:
   PSCI_REGISTRY_PASSWORD: ${{secrets.PSCI_REGISTRY_PASSWORD}}
